@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using System.Threading.Tasks.Dataflow;
+
 using eCommerce.Data;
 using eCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -24,5 +27,30 @@ namespace eCommerce.Controllers
 
             return View(products);
         }
+
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(Product p)
+        {
+            if (ModelState.IsValid)
+            {
+                // add to database
+                _context.Products.Add(p);
+                _context.SaveChanges();
+
+                TempData["Message"] = $"{p.Title} was added successfully";
+
+                // redirect to catalog page
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
     }
 }
