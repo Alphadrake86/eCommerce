@@ -17,6 +17,7 @@ namespace eCommerce.Models
         /// <summary>
         /// The title of the product
         /// </summary>
+        [Required]
         public string Title { get; set; }
 
         /// <summary>
@@ -28,6 +29,7 @@ namespace eCommerce.Models
         /// <summary>
         /// the user generated category this product falls under (Eg. Appliances, Electronics, Kitchen, etc.)
         /// </summary>
+        [Required]
         public string Category { get; set; }
     }
 }
