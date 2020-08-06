@@ -6,11 +6,17 @@
 
 <h1>Catalog</h1>
 
-<p>
+@if(TempData["Message"] != null){
+<div class="alert alert-success alert-dismissible">
     @TempData["Message"]
-</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+}
 
-<a asp-action="Add">Add product</a>
+<a asp-action="Add" class="btn btn-dark mb-2">Add product</a>
+
 
 
 <div class="table-responsive">
@@ -21,6 +27,7 @@
                 <th>@Html.DisplayNameFor(m => m.Price)</th>
                 <th>@Html.DisplayNameFor(m => m.Category)</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -30,10 +37,8 @@
                 <td>@p.Title</td>
                 <td>@Html.DisplayFor(m => p.Price)</td>
                 <td>@p.Category</td>
-                <td>
-                    <a class ="btn btn-secondary" href ="">Edit</a>
-                    <a class ="btn btn-danger" href =" ">Delete</a>
-                </td>
+                <td><a class ="btn btn-secondary" href ="">Edit</a></td>
+                <td><a class="btn btn-danger" href=" ">Delete</a></td>
             </tr>
             }
         </tbody>
