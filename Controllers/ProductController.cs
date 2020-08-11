@@ -36,13 +36,18 @@ namespace eCommerce.Controllers
         }
 
         [HttpPost]
+
         public async Task<IActionResult> Add(Product p)
+
+
         {
             if (ModelState.IsValid)
             {
                 // add to database
                 _context.Products.Add(p);
+
                 await _context.SaveChangesAsync();
+
 
                 TempData["Message"] = $"{p.Title} was added successfully";
 
