@@ -17,7 +17,7 @@
 }
 
 
-
+<a asp-action="Add" asp-controller="Product" class="btn btn-dark mb-2">Add Product</a>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead class="thead-dark">
@@ -36,7 +36,7 @@
                 <td>@p.Title</td>
                 <td>@Html.DisplayFor(m => p.Price)</td>
                 <td>@p.Category</td>
-                <td><a class ="btn btn-secondary" href ="">Edit</a></td>
+                <td><a class ="btn btn-secondary" asp-route-id ="@p.ProductId" asp-action="Edit">Edit</a></td>
                 <td><a class="btn btn-danger" href=" ">Delete</a></td>
             </tr>
             }
