@@ -43,3 +43,48 @@
         </tbody>
     </table>
 </div>
+<nav>
+    <ul class="pagination">
+
+        @if ((int)ViewData["pageNumber"] <= 1)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" asp-action="Index" asp-route-id="@((int)ViewData["pageNumber"] - 1)">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item ">
+                <a class="page-link" asp-action="Index" asp-route-id="@((int)ViewData["pageNumber"] - 1)">Previous</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= (int)ViewData["totalPages"]; i++)
+        {
+            string classes = "page-item ";
+            if (i == (int)ViewData["pageNumber"])
+            {
+                classes += "active";
+            }
+           
+            <li class="@classes">
+                <a class="page-link" asp-action="Index" asp-route-id="@i">@i</a>
+            </li>
+            
+        }
+
+        @if ((int)ViewData["pageNumber"] >= (int)ViewData["totalPages"])
+        {
+            <li class="page-item disabled">
+                <a class="page-link" asp-action="Index" asp-route-id="@((int)ViewData["pageNumber"] + 1)">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item ">
+                <a class="page-link" asp-action="Index" asp-route-id="@((int)ViewData["pageNumber"] + 1)">Next</a>
+            </li>
+        }
+        
+    </ul>
+</nav>
