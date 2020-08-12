@@ -21,9 +21,25 @@ namespace eCommerce.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-             List<Product> products = await _context.Products.ToListAsync();
+            int pageNumber = id ?? 1;
+            const int perPage = 3;
+
+            int totalProducts = await _context.Products.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)totalProducts / perPage);
+
+            pageNumber = Math.Min(pageNumber, totalPages);
+
+            ViewData["totalPages"] = totalPages;
+            ViewData["pageNumber"] = pageNumber;
+
+            List<Product> products = await _context
+                .Products
+                .OrderBy(p => p.Title)
+                .Skip(perPage * (pageNumber-1))
+                .Take(perPage)
+                .ToListAsync();
 
 
             return View(products);
