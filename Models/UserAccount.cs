@@ -22,9 +22,13 @@ namespace eCommerce.Models
     public class RegisterViewModel
     {
         [Required]
+        [EmailAddress]
+        [StringLength(200)]
         public string Email { get; set; }
 
         [Compare(nameof(Email))]
+        [Display(Name = "Confirm Password")]
+        [StringLength(120, MinimumLength = 8, ErrorMessage = "")]
         public string ConfirmEmail { get; set; }
 
         [Required]
@@ -33,6 +37,7 @@ namespace eCommerce.Models
 
         [Compare(nameof(Password))]
         [DataType(DataType.Password)]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         public string Username { get; set; }
