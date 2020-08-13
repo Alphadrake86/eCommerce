@@ -18,4 +18,23 @@ namespace eCommerce.Models
         public string Password { get; set; }
 
     }
+
+    public class RegisterViewModel
+    {
+        [Required]
+        public string Email { get; set; }
+
+        [Compare(nameof(Email))]
+        public string ConfirmEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Compare(nameof(Password))]
+        [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
+
+        public string Username { get; set; }
+    }
 }
