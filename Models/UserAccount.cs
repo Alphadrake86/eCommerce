@@ -40,6 +40,8 @@ namespace eCommerce.Models
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [StringLength(20)]
         public string Username { get; set; }
     }
 }
