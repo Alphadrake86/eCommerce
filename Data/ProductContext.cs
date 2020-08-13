@@ -13,5 +13,7 @@ namespace eCommerce.Data
             : base(options) {}
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<UserAccount> userAccounts { get; set; }
     }
 }
