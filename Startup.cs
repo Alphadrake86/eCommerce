@@ -28,6 +28,12 @@ namespace eCommerce
             services.AddControllersWithViews();
 
             services.AddDbContext<ProductContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(3);
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
