@@ -28,7 +28,7 @@ namespace eCommerce.Models
 
         [Compare(nameof(Email))]
         [Display(Name = "Confirm Password")]
-        [StringLength(120, MinimumLength = 8, ErrorMessage = "")]
+        [StringLength(120, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 120 charac ters")]
         public string ConfirmEmail { get; set; }
 
         [Required]
@@ -44,4 +44,15 @@ namespace eCommerce.Models
         [StringLength(20)]
         public string Username { get; set; }
     }
+
+    public class LoginViewModel
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
+
 }

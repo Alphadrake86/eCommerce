@@ -38,5 +38,10 @@ namespace eCommerce.Controllers
             }
             return View(RVM);
         }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
     }
 }
