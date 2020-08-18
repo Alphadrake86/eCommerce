@@ -36,6 +36,8 @@ namespace eCommerce
                 options.IdleTimeout = TimeSpan.FromDays(3);
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
