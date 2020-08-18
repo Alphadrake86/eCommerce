@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using eCommerce.Data;
 using eCommerce.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Controllers
 {
@@ -33,10 +35,45 @@ namespace eCommerce.Controllers
                     Password = RVM.Password };
                 // add to databasa
                 await _context.userAccounts.AddAsync(userAccount);
+                await _context.SaveChangesAsync();
                 // redirect home
                 return RedirectToAction("Index", "Home");
             }
             return View(RVM);
+        }
+
+        public IActionResult Login()
+        {
+            if (HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginAsync(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            UserAccount account = await _context.userAccounts
+                .Where(u => (u.Username == model.UsernameOrEmail || u.Email == model.UsernameOrEmail) && u.Password == model.Password)
+                .SingleOrDefaultAsync();
+
+            if(account == null)
+            {
+                ModelState.AddModelError(string.Empty, "Credentials not found");
+
+                return View(model);
+            }
+
+            HttpContext.Session.SetInt32("UserId", account.ID);
+            HttpContext.Session.SetString("Username", account.Username);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
