@@ -35,6 +35,7 @@ namespace eCommerce.Controllers
                     Password = RVM.Password };
                 // add to databasa
                 await _context.userAccounts.AddAsync(userAccount);
+                await _context.SaveChangesAsync();
                 // redirect home
                 return RedirectToAction("Index", "Home");
             }
@@ -59,7 +60,7 @@ namespace eCommerce.Controllers
                 return View(model);
             }
             UserAccount account = await _context.userAccounts
-                .Where(u => u.Username == model.Username && u.Password == model.Password)
+                .Where(u => (u.Username == model.UsernameOrEmail || u.Email == model.UsernameOrEmail) && u.Password == model.Password)
                 .SingleOrDefaultAsync();
 
             if(account == null)
