@@ -70,6 +70,7 @@ namespace eCommerce.Controllers
             }
 
             HttpContext.Session.SetInt32("UserId", account.ID);
+            HttpContext.Session.SetString("Username", account.Username);
 
             return RedirectToAction("Index", "Home");
         }
