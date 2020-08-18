@@ -49,6 +49,7 @@ namespace eCommerce.Models
     public class LoginViewModel
     {
         [Required]
+        [Display(Name = "Username or Email")]
         public string UsernameOrEmail { get; set; }
 
         [Required]
