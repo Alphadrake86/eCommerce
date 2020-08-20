@@ -75,5 +75,12 @@ namespace eCommerce.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction(actionName: "Index", controllerName: "Home");
+        }
     }
 }
