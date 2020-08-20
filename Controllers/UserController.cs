@@ -50,6 +50,8 @@ namespace eCommerce.Controllers
                 // add to databasa
                 await _context.userAccounts.AddAsync(userAccount);
                 await _context.SaveChangesAsync();
+
+                LogUserIntoSession(userAccount);
                 // redirect home
                 return RedirectToAction("Index", "Home");
             }
@@ -77,17 +79,22 @@ namespace eCommerce.Controllers
                 .Where(u => (u.Username == model.UsernameOrEmail || u.Email == model.UsernameOrEmail) && u.Password == model.Password)
                 .SingleOrDefaultAsync();
 
-            if(account == null)
+            if (account == null)
             {
                 ModelState.AddModelError(string.Empty, "Credentials not found");
 
                 return View(model);
             }
 
-            HttpContext.Session.SetInt32("UserId", account.ID);
-            HttpContext.Session.SetString("Username", account.Username);
+            LogUserIntoSession(account);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void LogUserIntoSession(UserAccount account)
+        {
+            HttpContext.Session.SetInt32("UserId", account.ID);
+            HttpContext.Session.SetString("Username", account.Username);
         }
 
         public IActionResult Logout()
