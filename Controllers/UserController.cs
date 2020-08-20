@@ -28,6 +28,20 @@ namespace eCommerce.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool isEmailTaken = await _context.userAccounts
+                    .Where(u => u.Email == RVM.Email)
+                    .AnyAsync();
+                bool isUsernameTaken = await _context.userAccounts
+                    .Where(u => u.Username == RVM.Username)
+                    .AnyAsync();
+                if (isEmailTaken || isUsernameTaken)
+                {
+                    if (isUsernameTaken)
+                        ModelState.AddModelError(nameof(RegisterViewModel.Username), "That username is already taken");
+                    if (isEmailTaken)
+                        ModelState.AddModelError(nameof(RegisterViewModel.Email), "That email is already in use");
+                    return View(RVM);
+                }
                 // map data
                 UserAccount userAccount = new UserAccount() {
                     Username = RVM.Username,
