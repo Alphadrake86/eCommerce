@@ -43,10 +43,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                             </li>
                         }
-                        else 
-                        { 
+                        else
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark disabled">Welcome back, @(Username)!</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark " asp-controller="User" asp-action="Logout">Log out</a>
                             </li>
                         }
 
