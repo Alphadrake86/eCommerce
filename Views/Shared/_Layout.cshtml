@@ -1,12 +1,17 @@
 ﻿@inject IHttpContextAccessor sessionData
+@inject eCommerce.Data.ProductContext _context
 
 @{ 
     int? UserId = sessionData.HttpContext.Session.GetInt32("UserId");
     string Username = sessionData.HttpContext.Session.GetString("Username");
-    //if(Username == null)
-    //{
-
-    //}
+    if (UserId.HasValue)
+    {
+        if (Username == null)
+        {
+            Username = _context.userAccounts.Where(u => u.ID == UserId).Single().Username;
+            sessionData.HttpContext.Session.SetString("Username",Username);
+        }
+    }
 }
 
 <!DOCTYPE html>
