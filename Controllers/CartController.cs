@@ -28,10 +28,23 @@ namespace eCommerce.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Add(int id)
         {
+            const string cartCookie = "cartCookie";
             // grab item from db
             Product p = await ProductDB.GetProductByIdAsync(_context, id);
+
+            // Get old cart items
+            var existingItems = _httpContext.HttpContext.Request.Cookies[cartCookie];
+            // add new item to old items
+            List<Product> cartList = new List<Product>();
+            if (existingItems != null)
+            {
+                cartList = 
+                JsonConvert.DeserializeObject<List<Product>>(existingItems);
+            }
+            cartList.Add(p);
+            // add items to cookie
             // add item to cookies
-            string data = JsonConvert.SerializeObject(p);
+            string data = JsonConvert.SerializeObject(cartList);
             CookieOptions options = new CookieOptions
             {
                 Expires = DateTime.Now.AddDays(30),
@@ -39,7 +52,7 @@ namespace eCommerce.Controllers
                 IsEssential = true,
             };
 
-            _httpContext.HttpContext.Response.Cookies.Append("cartCookie", data, options);
+            _httpContext.HttpContext.Response.Cookies.Append(cartCookie, data, options);
 
             // redirect them back to index
             return RedirectToAction("Index", "Product");
