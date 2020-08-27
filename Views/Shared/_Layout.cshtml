@@ -9,7 +9,7 @@
         if (Username == null)
         {
             Username = _context.userAccounts.Where(u => u.ID == UserId).Single().Username;
-            sessionData.HttpContext.Session.SetString("Username",Username);
+            sessionData.HttpContext.Session.SetString("Username", Username);
         }
     }
 }
