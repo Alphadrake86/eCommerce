@@ -28,7 +28,7 @@ namespace eCommerce.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Add(int id)
         {
-            const string cartCookie = "cartCookie";
+
             // grab item from db
             Product p = await ProductDB.GetProductByIdAsync(_context, id);
 
@@ -40,8 +40,9 @@ namespace eCommerce.Controllers
 
         public IActionResult Summary()
         {
-            
-            return View(CookieHelper.GetProductsFromCart(_httpContext));
+
+            List<Product> cartProducts = CookieHelper.GetProductsFromCart(_httpContext);
+            return View(cartProducts);
         }
     }
 }
