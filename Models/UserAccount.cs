@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Models
 {
+    /// <summary>
+    /// the user account
+    /// </summary>
     public class UserAccount
     {
         [Key]
@@ -19,6 +22,9 @@ namespace eCommerce.Models
 
     }
 
+    /// <summary>
+    /// The register view model of the user account class.
+    /// </summary>
     public class RegisterViewModel
     {
         [Required]
@@ -46,6 +52,9 @@ namespace eCommerce.Models
         public string Username { get; set; }
     }
 
+    /// <summary>
+    /// The login view model of the user account class.
+    /// </summary>
     public class LoginViewModel
     {
         [Required]

@@ -28,6 +28,7 @@ namespace eCommerce.Controllers
         {
             if (ModelState.IsValid)
             {
+                // check to see if either the username or password is taken
                 bool isEmailTaken = await _context.userAccounts
                     .Where(u => u.Email == RVM.Email)
                     .AnyAsync();
@@ -47,7 +48,7 @@ namespace eCommerce.Controllers
                     Username = RVM.Username,
                     Email = RVM.Email,
                     Password = RVM.Password };
-                // add to databasa
+                // add to database
                 await _context.userAccounts.AddAsync(userAccount);
                 await _context.SaveChangesAsync();
 
@@ -75,6 +76,7 @@ namespace eCommerce.Controllers
             {
                 return View(model);
             }
+            // get the account that has a matching password, and a matching either username or email
             UserAccount account = await _context.userAccounts
                 .Where(u => (u.Username == model.UsernameOrEmail || u.Email == model.UsernameOrEmail) && u.Password == model.Password)
                 .SingleOrDefaultAsync();

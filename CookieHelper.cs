@@ -8,10 +8,21 @@ using System.Threading.Tasks;
 
 namespace eCommerce
 {
+    /// <summary>
+    /// A helper class for sending and retrieving
+    /// </summary>
     public static class CookieHelper
     {
+        /// <summary>
+        /// The Key used in getting the cart cookies
+        /// </summary>
         public const string cartCookie = "cartCookie";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessor">The IHttpContextAccessor that has the cookies</param>
+        /// <returns>A list of products, filled with the items in the cart.</returns>
         public static List<Product> GetProductsFromCart(IHttpContextAccessor accessor)
         {
             string existingItems = accessor.HttpContext.Request.Cookies[cartCookie];
@@ -25,6 +36,11 @@ namespace eCommerce
             return cartList;
         }
 
+        /// <summary>
+        /// adds a product to the cookies
+        /// </summary>
+        /// <param name="accessor">The IHttpContextAccessor that has the cookies</param>
+        /// <param name="p">The product to add to the cookies</param>
         public static void AddItemToCart(IHttpContextAccessor accessor, Product p)
         {
             List<Product> cartList = GetProductsFromCart(accessor);
@@ -41,6 +57,10 @@ namespace eCommerce
             accessor.HttpContext.Response.Cookies.Append(cartCookie, data, options);
         }
 
+        /// <summary>
+        /// returns the total number of products in the cart
+        /// </summary>
+        /// <param name="accessor">The IHttpContextAccessor that has the cookies</param>
         public static int GetTotalNumberOfCartProducts(IHttpContextAccessor accessor)
         {
             return GetProductsFromCart(accessor).Count;
